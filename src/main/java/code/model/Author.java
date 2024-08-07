@@ -1,4 +1,4 @@
-package code.data;
+package code.model;
 
 public class Author {
     private String name;

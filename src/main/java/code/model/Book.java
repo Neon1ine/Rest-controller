@@ -1,4 +1,4 @@
-package code.data;
+package code.model;
 
 public class Book {
     private int id;
@@ -6,15 +6,13 @@ public class Book {
     private String genre;
     private int year;
     private Author author;
-    private boolean isInUse;
 
-    public Book(int id, String name, String genre, int year, Author author, boolean isInUse) {
+    public Book(int id, String name, String genre, int year, Author author) {
         this.id = id;
         this.name = name;
         this.genre = genre;
         this.year = year;
         this.author = author;
-        this.isInUse = isInUse;
     }
 
     public int getId() {
@@ -55,14 +53,6 @@ public class Book {
 
     public void setAuthor(Author author) {
         this.author = author;
-    }
-
-    public boolean isInUse() {
-        return isInUse;
-    }
-
-    public void setInUse(boolean inUse) {
-        isInUse = inUse;
     }
 
     @Override
