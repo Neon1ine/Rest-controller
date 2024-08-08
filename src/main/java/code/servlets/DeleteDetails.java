@@ -30,11 +30,8 @@ public class DeleteDetails extends HttpServlet {
             Connection conn = DriverManager.getConnection(DbUtil.url, DbUtil.user, DbUtil.password);
             System.out.println("connection successful");
             PreparedStatement st = conn.prepareStatement("delete from books where book_id=?");
-
             st.setInt(1, Integer.parseInt(request.getParameter("id")));
-
             st.executeUpdate();
-
             st.close();
             conn.close();
 

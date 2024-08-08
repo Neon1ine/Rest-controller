@@ -9,6 +9,16 @@ public class Author {
         this.surname = surname;
     }
 
+    public Author(String fullName) {
+        String[] arr = fullName.split(" ");
+        if (arr.length > 2) {
+            this.name = arr[0] + " " + arr[1];
+        } else {
+            this.name = arr[0];
+        }
+        this.surname = arr[arr.length - 1];
+    }
+
     public String getName() {
         return this.name;
     }

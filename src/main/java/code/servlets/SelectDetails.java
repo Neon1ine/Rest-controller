@@ -1,14 +1,10 @@
 package code.servlets;
 
 import code.DbUtil;
+import code.model.Book;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,45 +15,21 @@ public class SelectDetails extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             Class.forName(DbUtil.driver);
         } catch (ClassNotFoundException e) {
-            System.out.println("Class not found " + e);
+            System.err.println("Class not found " + e);
         }
+
+        Book book = IndexServlet.findBookInDb(
+                Integer.parseInt(request.getParameter("id")));
         try {
-
-            int id = 0;
-            String name = "", genre = "", year = "", author = "";
-
-            Connection conn = DriverManager.getConnection(DbUtil.url, DbUtil.user, DbUtil.password);
-            System.out.println("connection successful");
-            PreparedStatement st = conn.prepareStatement("select * from books where book_id=?");
-
-            st.setInt(1, Integer.parseInt(request.getParameter("id")));
-
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-
-                id = rs.getInt(1);
-                name = rs.getString(2);
-                genre = rs.getString(3);
-                year = rs.getString(4);
-                author = rs.getString(5);
-
-            }
-
-            rs.close();
-            st.close();
-            conn.close();
-
-            response.sendRedirect("result.jsp?id=" + id + "&name=" + name +
-                    "&genre=" + genre + "&year=" + year + "&author=" + author);
-
-        } catch (Exception e) {
+            response.sendRedirect("result.jsp?id=" + book.getId() + "&name=" + book.getName() +
+                    "&year=" + book.getYear() + "&author=" +
+                    book.getAuthor().toString() + "&genre=" + book.getGenre());
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -37,9 +37,7 @@ public class UpdateDetails extends HttpServlet {
             st.setString(3, request.getParameter("year"));
             st.setString(4, request.getParameter("author"));
             st.setInt(5, Integer.parseInt(request.getParameter("id")));
-
             st.executeUpdate();
-
             st.close();
             conn.close();
 

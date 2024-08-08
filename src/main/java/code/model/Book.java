@@ -1,18 +1,48 @@
 package code.model;
 
+import java.util.ArrayList;
+
 public class Book {
     private int id;
     private String name;
     private String genre;
     private int year;
     private Author author;
+    public static final String SPLIT_STRING = " ";
+    public static final String BOOK_IN_LINE_WITH_ID_TEMPLATE = "0 null 1000 0 0";
 
-    public Book(int id, String name, String genre, int year, Author author) {
+    public Book(int id, String name, int year, Author author, String genre) {
         this.id = id;
         this.name = name;
-        this.genre = genre;
         this.year = year;
         this.author = author;
+        this.genre = genre;
+    }
+
+    public static Book convertArrayToBook(ArrayList<String> arr) {
+        int id = Integer.parseInt(arr.get(0));
+        StringBuilder sb = new StringBuilder();
+        int yearIndex = findYearIndex(arr);
+        for (int i = 1; i < yearIndex; i++) {
+            sb.append(arr.get(i));
+            sb.append(" ");
+        }
+        String name = sb.substring(0, sb.length() - 1);
+        int year = Integer.parseInt(arr.get(yearIndex));
+        Author author = new Author(arr.get(arr.size() - 2));
+        String genre = arr.get(arr.size() - 1);
+        return new Book(id, name, year, author, genre);
+    }
+
+    private static int findYearIndex(ArrayList<String> arr) {
+        int yearIndex;
+        for (int i = 2; ; i++) {
+            if (arr.get(i).length() == 4) {
+                yearIndex = i;
+                break;
+            }
+        }
+        return yearIndex;
     }
 
     public int getId() {
@@ -57,10 +87,10 @@ public class Book {
 
     @Override
     public String toString() {
-        return (id + 1) +
+        return id +
                 " title: '" + name +
                 "', year: " + year +
-                ", author: " + author +
-                ";";
+                ", author: " + author.toString() +
+                ", genre: " + genre + ";";
     }
 }

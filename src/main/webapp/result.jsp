@@ -24,16 +24,16 @@
                 <td><%=request.getParameter("name")%></td>
             </tr>
             <tr>
-                <td>Genre Id:</td>
-                <td><%=request.getParameter("genre")%></td>
-            </tr>
-            <tr>
                 <td>Year:</td>
                 <td><%=request.getParameter("year")%></td>
             </tr>
             <tr>
-                <td>Author Id:</td>
+                <td>Author:</td>
                 <td><%=request.getParameter("author")%></td>
+            </tr>
+            <tr>
+                <td>Genre:</td>
+                <td><%=request.getParameter("genre")%></td>
             </tr>
             <tr />
         </table>
@@ -50,7 +50,7 @@
 <script language="javascript" type="text/javascript">
     function update() {
         var sid = document.forms[0].elements['stid'].value;
-        window.location.href = "Update.jsp?id=" + sid;
+        window.location.href = "update.jsp?id=" + sid;
     }
 </script>
 </html>
